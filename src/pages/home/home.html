@@ -11,41 +11,38 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- <ion-card>
-    <ion-card-content>
-      
-    </ion-card-content>
-    
-  </ion-card> -->
-  <ion-list>
-      <ion-item *ngFor="let student of students">
-        <ion-avatar item-start>
-          <img src="https://api.adorable.io/avatars/{{student.id}}}">
-        </ion-avatar>
-        <h2>{{student.name}}</h2>
-        <p>Age: {{student.age}}</p>
+
+  <form [formGroup]="studentForm" (ngSubmit)="saveData()">
+    <ion-list>
+      <ion-item>
+          <ion-input formControlName="name" placeholder="Nombre:"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="studentForm.get('name').errors && studentForm.get('name').dirty">
+          <p *ngIf="studentForm.get('name').hasError('required')" ion-text color="danger">Este campo es requerido</p>
+      </ion-item>
+      <ion-item>
+          <ion-input formControlName="age" placeholder="Edad:"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="studentForm.get('age').errors && studentForm.get('age').dirty">
+          <p *ngIf="studentForm.get('age').hasError('required')" ion-text color="danger">Este campo es requerido</p>
+          <p *ngIf="studentForm.get('age').hasError('pattern')" ion-text color="danger">Este campo debe ser numerico</p>
       </ion-item>
     </ion-list>
-  <!-- <ion-card>
+    <div padding>
+        <button [disabled]="studentForm.invalid" ion-button type="submit">Save</button>
+    </div>
+  </form>
 
-    <ion-card-header>
-      Students List
-    </ion-card-header>
-  
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let student of students">
-          <ion-avatar item-start>
-            <img src="https://api.adorable.io/avatars/{{student.id}}}">
-          </ion-avatar>
-          <h2>{{student.name}}</h2>
-          <p>Age: {{student.age}}</p>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-    
-  </ion-card> -->
-  
+  <ion-list>
+    <ion-item *ngFor="let student of students">
+      <ion-avatar item-start>
+        <img src="https://api.adorable.io/avatars/{{student.id}}}">
+      </ion-avatar>
+      <h2>{{student.name}}</h2>
+      <p>Age: {{student.age}}</p>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
 <ion-footer>
     

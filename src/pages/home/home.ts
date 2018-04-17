@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
 import { SearchService } from '../../providers/search-service/search-service';
 /**
  * Generated class for the HomePage page.
@@ -14,14 +16,19 @@ import { SearchService } from '../../providers/search-service/search-service';
   templateUrl: 'home.html',
 })
 export class HomePage {
-
   students: any[] = [];
+  studentForm: FormGroup;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    public formBuilder: FormBuilder,
     public searchService: SearchService
   ) {
+    this.studentForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      age: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]]
+    });
   }
 
   ionViewDidLoad() {
@@ -57,5 +64,14 @@ export class HomePage {
     else {
       this.loadInitialData();
     }
+  }
+
+  saveData() {
+    console.log(this.studentForm.value);
+    this.searchService.createStudent({name: this.studentForm.value.name, age: this.studentForm.value.age})
+      .subscribe((student) => {
+        console.log(student);
+        this.studentForm.reset();
+      });
   }
 }
