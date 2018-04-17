@@ -15,7 +15,7 @@ import { SearchService } from '../../providers/search-service/search-service';
 })
 export class HomePage {
 
-  students: string[] = [];
+  students: any[] = [];
 
   constructor(
     public navCtrl: NavController, 
@@ -25,12 +25,37 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    this.loadInitialData();
+  }
+
+  loadInitialData() {
     this.searchService.getStudents().subscribe(
       (data) => {
-        this.students = data['results'];
+        this.students = data['students'];
+      },
+      (error) => {
+        console.log(error);
       }
     )
   }
 
+  search(event) {
+    if(event.target.value !== undefined &&
+      event.target.value !== null &&
+      event.target.value !== ''
+    ) {
+      this.searchService.searchStudent(event.target.value)
+      .subscribe(
+        (data) => {
+          this.students = data['students'];
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
+    else {
+      this.loadInitialData();
+    }
+  }
 }

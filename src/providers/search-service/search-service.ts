@@ -22,6 +22,6 @@ export class SearchService {
   }
 
   searchStudent(query: string) {
-
+    return this.http.get(this.URL + '/search?query=' + query);
   }
 }

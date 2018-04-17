@@ -6,13 +6,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { SearchService } from '../providers/search-service/search-service';
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -21,14 +19,14 @@ import { SearchService } from '../providers/search-service/search-service';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    SearchService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SearchService
+    
   ]
 })
 export class AppModule {}
